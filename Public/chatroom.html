@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chatroom.css">
+    <title>Chat'Up</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="l-container">
+        <div class="l-header">
+            <h1><a href="/">CHAT'UP</a></h1>
+            <button
+                id="user-list-toggle"
+                class="c-user-list-toggle"
+            >Show users</button>
+        </div>
+
+        <div class="l-body">
+            <div id="sidebar" class="l-sidebar">
+                <h3 id="room-name"></h3>
+                <div class="c-users" id="users"></div>
+            </div>
+        
+            <div class="l-chatbox">
+                <div class="c-messages">
+                    <ul id="messages"></ul>
+                </div>
+        
+                <form class="c-form" id="message-form">
+                    <input type="text" name="message" class="c-form__input" />
+                    <input type="submit" class="c-form__submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script id="message-template" type="text/template">
+        <li class="c-message">
+            <div class="c-message__title">
+                <h3>{{from}}</h3>
+                <span>{{createdAt}}</span>
+            </div>
+            <div class="c-message__body">
+                <span>{{text}}</span>
+            </div>
+        </li>
+    </script>
+    
+    <script src="libs/moment.js"></script>
+    <script src="libs/mustache.js"></script>
+    <script src="chatroom.js"></script>
+</body>
+</html>
