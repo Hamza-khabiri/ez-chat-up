@@ -8,10 +8,12 @@ const { IsRealString } = require('./App/Utils/index');
 const { Users } = require('./App/UseCases/Users');
 
 const publicPath = path.join( __dirname, '../Public' );
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
+
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
+
 var users = new Users();
 var messages = new Messages();
 
