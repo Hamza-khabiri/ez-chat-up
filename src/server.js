@@ -2,6 +2,8 @@ const path = require( 'path' );
 const http = require( 'http' );
 const express = require( 'express' );
 const socketIO = require( 'socket.io' );
+const cors = require( 'cors' );
+const bodyParser = require("body-parser");
 
 const { Messages } = require('./App/UseCases/Messages');
 const { IsRealString } = require('./App/Utils/index');
@@ -17,6 +19,8 @@ var io = socketIO(server);
 var users = new Users();
 var messages = new Messages();
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static(publicPath));
 
 app.get('/', (req, res) => res.redirect('/index.html'))
@@ -70,6 +74,28 @@ io.on('connection', socket => {
   });
 });
 
-server.listen(port, () => {
-    console.log('server is up on ' + port);
-});
+server.listen(port, () =>  console.log( 'server is up on ' + port) );
+
+
+/* Public endpoints. */
+
+/* Get currently connected users in a specific room. */
+app.get( '/connected-users', cors(), ( req, res ) => {
+    const { room } = req.query;
+
+    res.json( { users: users.GetList( room ) } );
+  } 
+);
+
+/* Send a message to a specific room. */
+app.post( '/global-message', cors(), ( req, res ) => {
+
+    const { room, message } = req.query;
+
+    if( !room || !message ) {
+      res.json( { message: "invalid room or message" } )
+    } else {
+      io.to( room ).emit( 'newMessage', messages.Generate( 'Admin', message ) )
+    } 
+  }
+)
