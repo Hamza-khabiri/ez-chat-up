@@ -68,7 +68,7 @@ io.on('connection', socket => {
     var user = users.Remove( socket.id );
 
     if( user ) {
-      io.to( user.room ).emit( 'updateUserList', users.GetList());
+      io.to( user.room ).emit( 'updateUserList', users.GetList( user.room ) );
       io.to( user.room ).emit( 'newMessage', messages.Generate( 'Admin', user.name + ' has left.' ) );
     }
   });
