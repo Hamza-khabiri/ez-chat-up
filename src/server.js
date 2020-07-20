@@ -62,7 +62,6 @@ io.on('connection', socket => {
     
         callback();
     });
-
     
   socket.on( 'disconnect', () => {
     var user = users.Remove( socket.id );

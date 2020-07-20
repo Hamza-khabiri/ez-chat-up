@@ -1,8 +1,3 @@
-[{
-    id: '/#12poiajdspfoif',
-    name: 'Uzair_Capazyte'
-}]
-  
 class Users {
     constructor () {
       this.users = [];
